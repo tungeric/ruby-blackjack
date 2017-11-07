@@ -9,6 +9,10 @@ class Player
     @bankroll = bankroll
     @hand = nil
   end
+  
+  def reset_bankroll(amt)
+    @bankroll = amt
+  end
 
   def rename(name)
     @name = name
@@ -34,12 +38,21 @@ class Player
     dealer.take_bet(self, bet_amt)
   end
 
+  def transfer_money(other_player, amt)
+    other_player.add_money(amt)
+    @bankroll -= amt
+  end
+
+  def add_money(amt)
+    @bankroll += amt
+  end
+
   def choose_move
     puts "Choose a move:"
     puts "1 - Hit"
     puts "2 - Stand"
     puts "3 - Double down"
-    if @hand.cards.length == 2 && @hand.cards[0].blackjack_value == @hand.cards[1].blackjack_value
+    if @hand.cards.length == 2 && Card.display_values[@hand.cards[0].value] == Card.display_values[@hand.cards[1].value]
       puts "4 - Split"
     end
     move = gets.chomp

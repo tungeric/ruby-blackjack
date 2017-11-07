@@ -19,7 +19,8 @@ class Deck
 
   def shuffle!
     # @cards.shuffle!
-    puts Card.display_values[@cards[0].value]
+
+    # for testing (force split)
     @cards.sort_by! { |card| Card.display_values[card.value] }
   end
 

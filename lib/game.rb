@@ -11,6 +11,7 @@ class Game
     @current_player = players[0]
     @dealer = Dealer.new
     @deck = Deck.new
+    @split = false
     play
   end
 
@@ -65,7 +66,9 @@ class Game
       end
       @dealer.play_hand(@deck)
       handle_bets
+      display_all
       return_cards
+      unsplit_players if @split == true
       check_bankrolls
       continue = continue?
     end
@@ -79,6 +82,19 @@ class Game
       end
     end
     @players = @players.reject { |player| player.bankroll <=0 }
+  end
+
+  def unsplit_players
+    combined_bankroll = 0
+    split_player = nil
+    @players.each do |player|
+      combined_bankroll += player.bankroll if player.name.include?("-split")
+      split_player = player if player.name.include?("-split1")
+    end
+    @players.reject! { |player| player.name.include?("-split2") }
+    split_player.rename(split_player.name[0...-7])
+    split_player.reset_bankroll(combined_bankroll)
+    @split = false
   end
 
   def continue?
@@ -119,6 +135,7 @@ class Game
         double_down
         break
       when '4'
+        @split = true
         split
       end
     end
@@ -137,7 +154,10 @@ class Game
 
   def split
     idx = @players.index(@current_player)
-    split_player = Player.new("#{@current_player.name}-split2", @current_player.bankroll)
+    bet_amt = @dealer.bets[@current_player]
+    split_player = Player.new("#{@current_player.name}-split2", 0)
+    @current_player.transfer_money(split_player, bet_amt)
+    split_player.place_bet(@dealer, bet_amt)
     @current_player.rename("#{current_player.name}-split1")
     @players.insert(idx + 1, split_player)
     hand1 = Hand.new([@current_player.hand.cards[0]])
@@ -150,7 +170,6 @@ class Game
 
   def handle_bets
     @dealer.pay_bets
-    display_all
   end
 
   def return_cards
