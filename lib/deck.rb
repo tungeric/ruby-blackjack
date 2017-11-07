@@ -18,10 +18,10 @@ class Deck
   end
 
   def shuffle!
-    # @cards.shuffle!
+    @cards.shuffle!
 
     # for testing (force split)
-    @cards.sort_by! { |card| Card.display_values[card.value] }
+    # @cards.sort_by! { |card| Card.display_values[card.value] }
   end
 
   def draw(n)

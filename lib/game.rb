@@ -76,9 +76,12 @@ class Game
   end
 
   def check_bankrolls
+    system "clear"
     @players.each do |player|
       if player.bankroll <= 0
         puts "#{player.name}, sorry but you have no money left. Goodbye."
+      else
+        puts "#{player.name}, your current bankroll is $#{player.bankroll}"
       end
     end
     @players = @players.reject { |player| player.bankroll <=0 }
@@ -237,6 +240,8 @@ class Game
       puts "Remaining bankroll: $#{player.bankroll}"
       puts ""
     end
+    puts "Press Enter to continue"
+    temp = gets.chomp
   end
 
 end
