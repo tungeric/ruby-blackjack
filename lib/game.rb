@@ -118,6 +118,8 @@ class Game
       when '3'
         double_down
         break
+      when '4'
+        split
       end
     end
     if @current_player.hand.busted?
@@ -131,6 +133,19 @@ class Game
     @dealer.bets[@current_player] = bet_amt * 2
     @current_player.hand.hit(@deck)
     display
+  end
+
+  def split
+    idx = @players.index(@current_player)
+    split_player = Player.new("#{@current_player.name}-split2", @current_player.bankroll)
+    @current_player.rename("#{current_player.name}-split1")
+    @players.insert(idx + 1, split_player)
+    hand1 = Hand.new([@current_player.hand.cards[0]])
+    hand2 = Hand.new([@current_player.hand.cards[1]])
+    @current_player.split_hand(hand1, @deck)
+    @players[idx+1].split_hand(hand2, @deck)
+    take_turn
+    switch_players
   end
 
   def handle_bets

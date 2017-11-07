@@ -10,8 +10,17 @@ class Player
     @hand = nil
   end
 
+  def rename(name)
+    @name = name
+  end
+
   def pay_winnings(bet_amt)
     @bankroll += bet_amt
+  end
+
+  def split_hand(hand, deck)
+    @hand = hand
+    @hand.hit(deck)
   end
 
   def return_cards(deck)
