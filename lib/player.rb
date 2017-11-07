@@ -30,9 +30,9 @@ class Player
     puts "1 - Hit"
     puts "2 - Stand"
     puts "3 - Double down"
-    # if @hand.length == 2 && @hand[0].blackjack_value == @hand[1].blackjack_value
-    #   puts "3 - Split"
-    # end
+    if @hand.cards.length == 2 && @hand.cards[0].blackjack_value == @hand.cards[1].blackjack_value
+      puts "4 - Split"
+    end
     move = gets.chomp
   end
 

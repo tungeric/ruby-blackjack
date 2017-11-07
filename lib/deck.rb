@@ -18,7 +18,9 @@ class Deck
   end
 
   def shuffle!
-    @cards.shuffle!
+    # @cards.shuffle!
+    puts Card.display_values[@cards[0].value]
+    @cards.sort_by! { |card| Card.display_values[card.value] }
   end
 
   def draw(n)
