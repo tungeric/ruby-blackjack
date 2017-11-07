@@ -16,7 +16,7 @@ class Player
 
   def return_cards(deck)
     @hand.return_cards(deck)
-    @hand = nil
+    # @hand = nil
   end
 
   def place_bet(dealer, bet_amt)
@@ -29,15 +29,11 @@ class Player
     puts "Choose a move:"
     puts "1 - Hit"
     puts "2 - Stand"
-    if @hand.length == 2 && @hand[0].blackjack_value == @hand[1].blackjack_value
-      puts "3 - Split"
-    end
+    puts "3 - Double down"
+    # if @hand.length == 2 && @hand[0].blackjack_value == @hand[1].blackjack_value
+    #   puts "3 - Split"
+    # end
     move = gets.chomp
-  end
-
-  def take_turn
-    move = choose_move
-    puts move
   end
 
 end

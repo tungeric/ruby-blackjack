@@ -55,6 +55,14 @@ class Card
     VALUE_STRINGS.keys
   end
 
+  def self.display_suits
+    SUIT_STRINGS
+  end
+
+  def self.display_values
+    VALUE_STRINGS
+  end
+
   def blackjack_value
     raise AceException.new "ace has special value" if value == :ace
     BLACKJACK_VALUE[value]

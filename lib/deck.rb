@@ -32,4 +32,9 @@ class Deck
     taken_cards
   end
 
+  def return(cards)
+    cards.each { |card| @cards << card }
+    shuffle!
+  end
+
 end

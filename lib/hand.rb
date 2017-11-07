@@ -17,7 +17,7 @@ class Hand
     ace_count = 0
     @cards.each do |card|
       begin
-        sum+= card.blackjack_value
+        sum += card.blackjack_value
       rescue AceException
         ace_count +=1
         sum += 1
@@ -25,7 +25,7 @@ class Hand
     end
     if ace_count > 0
       if sum <=11
-        sum += 11
+        sum += 10
       end
     end
     sum
@@ -44,6 +44,21 @@ class Hand
     return false if busted?
     return true if other_hand.busted?
     points > other_hand.points
+  end
+
+  def ties?(other_hand)
+    return false if busted?
+    points == other_hand.points
+  end
+
+  def to_s
+    card_display = @cards.map { |card| "|#{Card.display_values[card.value]}#{Card.display_suits[card.suit]}|" }
+    card_display.join("")
+  end
+
+  def return_cards(deck)
+    deck.return(@cards)
+    @cards = []
   end
 
 end
