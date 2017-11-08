@@ -16,14 +16,14 @@ class Game
   end
 
   def get_num_players
-    puts "How many players?"
+    puts "How many players? (0-8)"
     begin
       num_players = Integer(gets.chomp)
-      unless num_players > 0
+      unless num_players > 0 && num_players <= 8
         raise ArgumentError
       end
     rescue ArgumentError
-      puts "Please enter a number greater than 0"
+      puts "Please enter a number between 1 and 8"
       retry
     end
     num_players
